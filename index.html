@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Job Application Tracker</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="app-container">
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <i data-lucide="briefcase"></i>
+        <h2>JobTrack</h2>
+      </div>
+      <nav class="sidebar-nav">
+        <a href="#" class="nav-item active">
+          <i data-lucide="layout-dashboard"></i>
+          <span>Dashboard</span>
+        </a>
+      </nav>
+    </aside>
+
+    <main class="main-content">
+      <header class="topbar">
+        <h1>Applications Dashboard</h1>
+        <button id="add-new-btn" class="btn btn-primary">
+          <i data-lucide="plus"></i> Add Application
+        </button>
+      </header>
+
+      <section class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-icon total"><i data-lucide="layers"></i></div>
+          <div class="stat-info">
+            <span class="stat-label">Total Applications</span>
+            <span class="stat-value" id="stat-total">0</span>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon pending"><i data-lucide="clock"></i></div>
+          <div class="stat-info">
+            <span class="stat-label">Pending</span>
+            <span class="stat-value" id="stat-pending">0</span>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon interview"><i data-lucide="calendar"></i></div>
+          <div class="stat-info">
+            <span class="stat-label">Interview</span>
+            <span class="stat-value" id="stat-interview">0</span>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon accepted"><i data-lucide="check-circle"></i></div>
+          <div class="stat-info">
+            <span class="stat-label">Accepted</span>
+            <span class="stat-value" id="stat-accepted">0</span>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon rejected"><i data-lucide="x-circle"></i></div>
+          <div class="stat-info">
+            <span class="stat-label">Rejected</span>
+            <span class="stat-value" id="stat-rejected">0</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="applications-section">
+        <div class="list-controls">
+          <div class="search-box">
+            <i data-lucide="search"></i>
+            <input type="text" id="search-input" placeholder="Search by company or title...">
+          </div>
+          <div class="filter-box">
+            <i data-lucide="filter"></i>
+            <select id="status-filter">
+              <option value="All">All Statuses</option>
+              <option value="Pending">Pending</option>
+              <option value="Interview">Interview</option>
+              <option value="Accepted">Accepted</option>
+              <option value="Rejected">Rejected</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="table-container">
+          <table id="applications-table">
+            <thead>
+              <tr>
+                <th>Company</th>
+                <th>Job Title</th>
+                <th>Date Applied</th>
+                <th>Status</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="applications-body">
+              <!-- JS dynamically injected -->
+            </tbody>
+          </table>
+          <div id="empty-state" class="empty-state hidden">
+            <i data-lucide="folder-open"></i>
+            <h3>No applications found</h3>
+            <p>Start tracking your job search by adding your first application.</p>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <!-- Modal for Add/Edit -->
+  <div class="modal-backdrop hidden" id="app-modal">
+    <div class="modal">
+      <div class="modal-header">
+        <h2 id="modal-title">Add Application</h2>
+        <button id="close-modal-btn" class="icon-btn"><i data-lucide="x"></i></button>
+      </div>
+      <form id="application-form">
+        <input type="hidden" id="app-id">
+        <div class="form-group" style="padding: 0 24px;">
+          <label for="company-name">Company Name*</label>
+          <input type="text" id="company-name" required>
+        </div>
+        <div class="form-group" style="padding: 0 24px;">
+          <label for="job-title">Job Title*</label>
+          <input type="text" id="job-title" required>
+        </div>
+        <div class="form-row" style="padding: 0 24px;">
+          <div class="form-group">
+            <label for="date-applied">Date Applied*</label>
+            <input type="date" id="date-applied" required>
+          </div>
+          <div class="form-group">
+            <label for="status">Status*</label>
+            <select id="status" required>
+              <option value="Pending">Pending</option>
+              <option value="Interview">Interview</option>
+              <option value="Accepted">Accepted</option>
+              <option value="Rejected">Rejected</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group" style="padding: 0 24px;">
+          <label for="app-link">Application Link</label>
+          <input type="url" id="app-link" placeholder="https://...">
+        </div>
+        <div class="form-group" style="padding: 0 24px;">
+          <label for="notes">Notes</label>
+          <textarea id="notes" rows="3" placeholder="Any details..." style="resize:vertical;"></textarea>
+        </div>
+        <div class="modal-actions" style="padding: 8px 24px 24px;">
+          <button type="button" id="cancel-btn" class="btn btn-secondary">Cancel</button>
+          <button type="submit" class="btn btn-primary">Save Application</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
