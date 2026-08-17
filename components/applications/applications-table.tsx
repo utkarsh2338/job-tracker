@@ -271,6 +271,51 @@ export function ApplicationsTable({
         </div>
       </div>
 
+      {/* Active Filter Chips Row */}
+      {hasActiveFilters && (
+        <div className="flex flex-wrap items-center gap-1.5 px-1 py-0.5">
+          <span className="text-[11px] font-medium text-muted-foreground mr-1">Active filters:</span>
+          {search && (
+            <span className="inline-flex items-center gap-1 text-[11px] font-medium px-2 py-0.5 rounded-md bg-secondary text-secondary-foreground border border-border">
+              Search: "{search}"
+              <button onClick={() => setSearch("")} className="hover:text-foreground">
+                <X className="h-3 w-3" />
+              </button>
+            </span>
+          )}
+          {statusFilter !== "ALL" && (
+            <span className="inline-flex items-center gap-1 text-[11px] font-medium px-2 py-0.5 rounded-md bg-secondary text-secondary-foreground border border-border">
+              Stage: {statusFilter}
+              <button onClick={() => setStatusFilter("ALL")} className="hover:text-foreground">
+                <X className="h-3 w-3" />
+              </button>
+            </span>
+          )}
+          {workTypeFilter !== "ALL" && (
+            <span className="inline-flex items-center gap-1 text-[11px] font-medium px-2 py-0.5 rounded-md bg-secondary text-secondary-foreground border border-border">
+              Type: {workTypeFilter}
+              <button onClick={() => setWorkTypeFilter("ALL")} className="hover:text-foreground">
+                <X className="h-3 w-3" />
+              </button>
+            </span>
+          )}
+          {tagFilter !== "ALL" && (
+            <span className="inline-flex items-center gap-1 text-[11px] font-medium px-2 py-0.5 rounded-md bg-secondary text-secondary-foreground border border-border">
+              Tag: {allTags.find((t) => t.id === tagFilter)?.name || tagFilter}
+              <button onClick={() => setTagFilter("ALL")} className="hover:text-foreground">
+                <X className="h-3 w-3" />
+              </button>
+            </span>
+          )}
+          <button
+            onClick={clearFilters}
+            className="text-[11px] text-primary hover:underline font-medium ml-1"
+          >
+            Reset all
+          </button>
+        </div>
+      )}
+
       {/* Results Counter */}
       <div className="flex items-center justify-between px-1 text-xs text-muted-foreground">
         <span>

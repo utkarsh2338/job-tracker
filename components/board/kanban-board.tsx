@@ -316,9 +316,16 @@ export function KanbanBoard({
                   <span className={`px-2 py-0.5 rounded-full text-xs font-bold border ${col.color}`}>
                     {colApps.length}
                   </span>
-                  <h3 className="text-xs font-bold uppercase tracking-wider text-foreground">
-                    {col.title}
-                  </h3>
+                  <div>
+                    <h3 className="text-xs font-bold uppercase tracking-wider text-foreground">
+                      {col.title}
+                    </h3>
+                    {totalSalary > 0 && (
+                      <p className="text-[10px] text-muted-foreground font-mono">
+                        {formatSalary(totalSalary, colApps[0]?.salaryCurrency || "USD")} vol
+                      </p>
+                    )}
+                  </div>
                 </div>
 
                 <Button
