@@ -1,0 +1,106 @@
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id           String        @id @default(cuid())
+  email        String?       @unique
+  name         String?
+  avatarUrl    String?
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+  applications Application[]
+}
+
+model Application {
+  id             String          @id @default(cuid())
+  userId         String?
+  user           User?           @relation(fields: [userId], references: [id], onDelete: Cascade)
+  company        String
+  title          String
+  location       String?         // e.g. "San Francisco, CA", "Remote - US"
+  workType       String          @default("REMOTE") // REMOTE, HYBRID, ONSITE
+  status         String          @default("APPLIED") // APPLIED, SCREENING, INTERVIEWING, OFFER, REJECTED, ARCHIVED
+  dateApplied    DateTime        @default(now())
+  salaryMin      Int?
+  salaryMax      Int?
+  salaryCurrency String          @default("USD")
+  link           String?
+  notes          String?
+  followUpDate   DateTime?
+  logoUrl        String?
+  contactName    String?
+  contactEmail   String?
+  contactRole    String?
+  priority       String          @default("MEDIUM") // LOW, MEDIUM, HIGH, DREAM
+  rating         Int             @default(3) // 1-5 stars interest
+  orderIndex     Int             @default(0)
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt
+
+  tags           ApplicationTag[]
+  timelineEvents TimelineEvent[]
+  attachments    Attachment[]
+  interviews     Interview[]
+}
+
+model Tag {
+  id           String           @id @default(cuid())
+  name         String           @unique
+  color        String           @default("#10b981") // hex code or token
+  createdAt    DateTime         @default(now())
+  applications ApplicationTag[]
+}
+
+model ApplicationTag {
+  applicationId String
+  tagId         String
+  application   Application @relation(fields: [applicationId], references: [id], onDelete: Cascade)
+  tag           Tag         @relation(fields: [tagId], references: [id], onDelete: Cascade)
+
+  @@id([applicationId, tagId])
+}
+
+model TimelineEvent {
+  id            String      @id @default(cuid())
+  applicationId String
+  application   Application @relation(fields: [applicationId], references: [id], onDelete: Cascade)
+  type          String      // STATUS_CHANGE, NOTE, INTERVIEW, OFFER, FOLLOW_UP, EMAIL, CALL
+  title         String
+  description   String?
+  eventDate     DateTime    @default(now())
+  createdAt     DateTime    @default(now())
+}
+
+model Attachment {
+  id            String      @id @default(cuid())
+  applicationId String
+  application   Application @relation(fields: [applicationId], references: [id], onDelete: Cascade)
+  name          String
+  fileUrl       String
+  fileType      String?     // RESUME, COVER_LETTER, PORTFOLIO, OFFER_LETTER, OTHER
+  fileSize      Int?
+  createdAt     DateTime    @default(now())
+}
+
+model Interview {
+  id            String      @id @default(cuid())
+  applicationId String
+  application   Application @relation(fields: [applicationId], references: [id], onDelete: Cascade)
+  title         String      // e.g. "Screening Call", "System Design", "Founder Round"
+  round         Int?        @default(1)
+  scheduledAt   DateTime
+  durationMin   Int         @default(45)
+  location      String?     // "Google Meet", "Zoom", "Onsite"
+  meetingLink   String?
+  interviewer   String?
+  notes         String?
+  completed     Boolean     @default(false)
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+}
