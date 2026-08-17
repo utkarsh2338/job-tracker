@@ -1,0 +1,188 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 220 20% 98%;
+    --foreground: 222 47% 11%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 222 47% 11%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 222 47% 11%;
+
+    --primary: 158 64% 32%; /* Emerald #047857 */
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 210 20% 94%;
+    --secondary-foreground: 222 47% 11%;
+
+    --muted: 210 20% 95%;
+    --muted-foreground: 215 16% 47%;
+
+    --accent: 38 92% 50%; /* Amber #f59e0b */
+    --accent-foreground: 24 95% 15%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 214 25% 90%;
+    --input: 214 25% 90%;
+    --ring: 158 64% 32%;
+
+    --radius: 0.75rem;
+
+    --chart-1: 158 64% 40%;
+    --chart-2: 38 92% 50%;
+    --chart-3: 199 89% 48%;
+    --chart-4: 262 83% 58%;
+    --chart-5: 0 84% 60%;
+
+    --status-applied-bg: 210 20% 95%;
+    --status-applied-text: 215 25% 27%;
+    --status-applied-border: 214 25% 85%;
+
+    --status-screening-bg: 48 100% 96%;
+    --status-screening-text: 35 92% 33%;
+    --status-screening-border: 45 93% 85%;
+
+    --status-interviewing-bg: 199 95% 95%;
+    --status-interviewing-text: 201 96% 32%;
+    --status-interviewing-border: 199 89% 82%;
+
+    --status-offer-bg: 152 76% 94%;
+    --status-offer-text: 160 84% 24%;
+    --status-offer-border: 152 76% 80%;
+
+    --status-rejected-bg: 0 93% 96%;
+    --status-rejected-text: 354 70% 40%;
+    --status-rejected-border: 0 84% 88%;
+
+    --status-archived-bg: 220 14% 96%;
+    --status-archived-text: 220 9% 46%;
+    --status-archived-border: 220 13% 88%;
+  }
+
+  .dark {
+    --background: 224 45% 6%; /* #090D16 */
+    --foreground: 210 40% 98%;
+
+    --card: 224 40% 9%; /* #0F172A / sleek navy dark */
+    --card-foreground: 210 40% 98%;
+
+    --popover: 224 40% 9%;
+    --popover-foreground: 210 40% 98%;
+
+    --primary: 158 64% 45%; /* Glowing emerald */
+    --primary-foreground: 224 45% 6%;
+
+    --secondary: 220 35% 15%;
+    --secondary-foreground: 210 40% 98%;
+
+    --muted: 220 30% 14%;
+    --muted-foreground: 215 20% 65%;
+
+    --accent: 38 92% 55%;
+    --accent-foreground: 224 45% 6%;
+
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 220 30% 18%;
+    --input: 220 30% 18%;
+    --ring: 158 64% 45%;
+
+    --chart-1: 158 64% 45%;
+    --chart-2: 38 92% 55%;
+    --chart-3: 199 89% 58%;
+    --chart-4: 262 83% 68%;
+    --chart-5: 0 72% 60%;
+
+    --status-applied-bg: 220 30% 14%;
+    --status-applied-text: 215 20% 80%;
+    --status-applied-border: 220 30% 22%;
+
+    --status-screening-bg: 35 92% 14%;
+    --status-screening-text: 45 93% 75%;
+    --status-screening-border: 35 92% 24%;
+
+    --status-interviewing-bg: 201 96% 14%;
+    --status-interviewing-text: 199 89% 75%;
+    --status-interviewing-border: 201 96% 24%;
+
+    --status-offer-bg: 160 84% 12%;
+    --status-offer-text: 152 76% 75%;
+    --status-offer-border: 160 84% 22%;
+
+    --status-rejected-bg: 354 70% 14%;
+    --status-rejected-text: 0 84% 75%;
+    --status-rejected-border: 354 70% 24%;
+
+    --status-archived-bg: 220 20% 12%;
+    --status-archived-text: 220 10% 70%;
+    --status-archived-border: 220 20% 20%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground antialiased min-h-screen font-sans;
+    font-feature-settings: "rlig" 1, "calt" 1, "cv02" 1, "cv03" 1, "cv04" 1, "cv11" 1;
+  }
+  h1, h2, h3, .font-serif-luxury {
+    font-family: var(--font-serif), Georgia, Cambria, "Times New Roman", Times, serif;
+    letter-spacing: -0.02em;
+  }
+}
+
+/* Custom modern scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: hsl(var(--muted-foreground) / 0.25);
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: hsl(var(--muted-foreground) / 0.45);
+}
+
+/* Glassmorphism surfaces */
+.glass-panel {
+  background: hsl(var(--card) / 0.82);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+/* Shimmer gradient loading */
+.skeleton-shimmer {
+  background: linear-gradient(
+    90deg,
+    hsl(var(--muted)) 0%,
+    hsl(var(--muted) / 0.5) 50%,
+    hsl(var(--muted)) 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
