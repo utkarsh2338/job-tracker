@@ -757,9 +757,9 @@ export function ApplicationDrawer({
                                 href={interview.meetingLink}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="inline-flex items-center gap-1 px-2 py-1 rounded-md text-xs font-medium bg-primary/10 text-primary hover:bg-primary/20"
+                                className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-semibold bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 hover:bg-emerald-500/20 border border-emerald-500/30 transition-all shadow-xs"
                               >
-                                <Video className="h-3 w-3" /> Join
+                                <Video className="h-3.5 w-3.5" /> Join Call
                               </a>
                             )}
                             <Button
